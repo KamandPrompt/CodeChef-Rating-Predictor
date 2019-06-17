@@ -7,6 +7,6 @@ page_soup=soup(page,"html.parser")
 a=page_soup.findAll('tr')
 print(page_soup)
 for rows in a:
-    for col in a.findAll('td'):
+    for col in rows.findAll('td'):
         print(col.text)
     
