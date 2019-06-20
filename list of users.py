@@ -12,9 +12,9 @@ t=1
 #making of headers
 html_file1=urllib.request.Request("https://www.codechef.com/api/ratings/all?page=1&sortBy=rating&order=desc&itemsPerPage=100", headers={"User-Agent" :"Mozilla /5.0"})
 with urllib.request.urlopen(html_file1) as url1:
-    data1 = json.loads(url1.read().decode())
+    data2 = json.loads(url1.read().decode())
 #    print(data1)
-data1=data1["list"]
+data1=data2["list"]
 attributes=list(data1[0].keys())
 attributes.pop()
 headers=""
@@ -29,7 +29,7 @@ f.write(headers+"\n")
 err=0
 
 
-while(t<4420):
+while(t<data2["availablePages"]):
     try:
         html_file=urllib.request.Request(a1+str(t)+b1, headers={"User-Agent" :"Mozilla /5.0"})
         with urllib.request.urlopen(html_file) as url:
