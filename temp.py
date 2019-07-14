@@ -1,5 +1,4 @@
 
-from fake_useragent import UserAgent
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd
@@ -7,7 +6,7 @@ import pandas as pd
 def get_rating_graphs(username):
     page=requests.get("https://www.codechef.com/users/"+username,headers={'User-Agent': 'Mozilla/5.0'})
     soup = BeautifulSoup(page.content, 'html.parser')
-    x=str(soup.select('script[type="text/javascript"]')[29]).split(';')[9][19:].strip()
+    x=str(soup)[str(soup).find('var all_rating = ')+18:str(soup).find('var current_user_rating ')-6].strip()
     Code=[]
     Year=[]
     Month=[]
@@ -18,7 +17,7 @@ def get_rating_graphs(username):
     Rank=[]
     Name=[]
     End_Date=[]
-    y=x[1:-2].split('},')
+    y=x.split('},')
     null='None'
     for i in range(len(y)):
         y[i]=y[i]+'}'
@@ -38,5 +37,10 @@ def get_rating_graphs(username):
     
     df = pd.DataFrame(dict) 
     df.to_csv(username+'.csv') 
-get_rating_graphs('karansdoshi')
-get_rating_graphs('physah86')
+usn=pd.read_csv('username.csv')['username'][0:100]
+for i in usn:
+    try:
+        get_rating_graphs(i)
+    except:
+        continue
+  
